@@ -3,12 +3,14 @@ import { compile } from 'handlebars';
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import chrome from 'chrome-aws-lambda'
+import { ICreateCertificate } from '../utils/interfacesTS/ICreateCertificate';
 
 interface ITemplate {
     name: string;
     grade: string;
     id: string;
-    medal: string
+    medal: string,
+    date: string;
 }
 const compileTemplate = (data: ITemplate) => {
     const filePath = join(process.cwd(), 'src', 'templates', 'certificate.hbs')
@@ -18,8 +20,9 @@ const compileTemplate = (data: ITemplate) => {
 }
 
 export const handler = async (e) => {
-    const { id, name, grade } = e.body
-
+    const { id, name, grade } = JSON.parse(e.body) as ICreateCertificate;
+    console.log(id, name, grade);
+    
     const medalPath = join(process.cwd(), 'src', 'templates', 'selo.png')
 
     const medal = readFileSync(medalPath, 'base64')
@@ -28,7 +31,8 @@ export const handler = async (e) => {
         name,
         grade,
         id,
-        medal
+        medal,
+        date: new Date().toLocaleDateString()
     }
 
 
