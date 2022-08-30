@@ -26,7 +26,19 @@ const serverlessConfiguration: AWS = {
   },
   // import the function via paths
   functions: {
-    GetUserUseCase:{
+    GenerateCertificateUseCase: {
+      handler: 'src/functions/GenerateCertificateUseCase.handler',
+      events: [
+        {
+          http: {
+            method: 'post',
+            path: 'certificate',
+            cors: true,
+          }
+        }
+      ]
+    },
+    GetUserUseCase: {
       handler: 'src/functions/GetUserUseCase.handler',
       events: [
         {
@@ -62,11 +74,12 @@ const serverlessConfiguration: AWS = {
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
+      external: ['chrome-aws-lambda'],
     },
     dynamodb: {
       stages: ["dev", "local"],
       start: {
-        port: 8000,
+        port: 8080,
         inMemory: true,
         migrate: true,
       }
