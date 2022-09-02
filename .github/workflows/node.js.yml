@@ -22,7 +22,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        
-    - run: npm deploy 
-    - run: npm local
+    
+    - run: npm install
     - run: ls package.json
