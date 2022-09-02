@@ -36,7 +36,7 @@ This template contains a single lambda function triggered by an HTTP request mad
 
 > ⚠️ As is, this template, once deployed, opens a **public** endpoint within your AWS account resources. Anybody with the URL can actively execute the API Gateway endpoint and the corresponding lambda. You should protect this endpoint with the authentication method of your choice.
 
-### Locally
+## Locally
 
 In order to test the hello function locally, run the following command:
 
